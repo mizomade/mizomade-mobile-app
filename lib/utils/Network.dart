@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'API.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'CustomUtils.dart';
 
 var storage = FlutterSecureStorage();
 
@@ -131,7 +129,7 @@ Future updateProfilephoto(String filename) async {
     "content-type": "application/json",
     "Authorization": "Token " + await storage.read(key: 'skey')
   };
-  print("STORAGE" + await storage.read(key: 'user_id').toString());
+  print("STORAGE" +storage.read(key: 'user_id').toString());
   var request = http.MultipartRequest(
       'PUT', Uri.parse(HOST_URL + '/api/user/profile/update/profilephoto/' + id));
   request.fields['username'] = prefs.getString('username');
@@ -155,7 +153,7 @@ Future updateCoverPhoto(String filename) async {
     "content-type": "application/json",
     "Authorization": "Token " + await storage.read(key: 'skey')
   };
-  print("STORAGE" + await storage.read(key: 'user_id').toString());
+  print("STORAGE" + storage.read(key: 'user_id').toString());
   var request = http.MultipartRequest(
       'PUT', Uri.parse(HOST_URL + '/api/user/profile/update/coverphoto/' + id));
   request.fields['username'] = prefs.getString('username');
@@ -172,7 +170,7 @@ Future updateCoverPhoto(String filename) async {
 }
 
 Future<bool> checkUsername(String username) async {
-  final prefs = await SharedPreferences.getInstance();
+  // final prefs = await SharedPreferences.getInstance();
   print("STARTING Username Change ATTEMPT");
   String key = await storage.read(key: 'skey');
 
@@ -205,9 +203,9 @@ Future<bool> checkUsername(String username) async {
 }
 
 Future updateProfile(
-    String username, String first_name, String last_name, String bio) async {
+    String username, String firstName, String lastName, String bio) async {
   String id = await storage.read(key: 'user_id');
-  final prefs = await SharedPreferences.getInstance();
+  // final prefs = await SharedPreferences.getInstance();
   Map<String, String> headers = {
     "content-type": "application/json",
     "Authorization": "Token " + await storage.read(key: 'skey')
@@ -215,12 +213,12 @@ Future updateProfile(
 
   Map<String, String> body = {
     "username": username,
-    "first_name": first_name,
-    "last_name": last_name,
+    "first_name": firstName,
+    "last_name": lastName,
     "bio": bio
   };
 
-  print("STORAGE" + await storage.read(key: 'user_id').toString());
+  print("STORAGE" +  storage.read(key: 'user_id').toString());
   var res = await http.put(Uri.parse(HOST_URL + '/api/user/profile/update/' + id),
       headers: headers, body: jsonEncode(body));
 
@@ -492,13 +490,13 @@ Future createPost(String content ) async {
 
 Future publishPost(String ids,String title,String category,String coverimage,String tags ) async {
   print("PUBLISH" + ids.toString() +title.toString() + category.toString() + coverimage.toString() + tags.toString());
-  String id = await storage.read(key: 'user_id');
-  final prefs = await SharedPreferences.getInstance();
+  // String id = await storage.read(key: 'user_id');
+  // final prefs = await SharedPreferences.getInstance();
   Map<String, String> headers = {
     "content-type": "application/json",
     "Authorization": "Token " + await storage.read(key: 'skey')
   };
-  print("STORAGE" + await storage.read(key: 'user_id').toString());
+  print("STORAGE" +  storage.read(key: 'user_id').toString());
   var request = http.MultipartRequest(
       'PATCH', Uri.parse(HOST_URL + '/api/posts/create/'));
   // request.fields['username'] = prefs.getString('username');
@@ -609,14 +607,12 @@ Future<bool> deleteComment(String id) async {
 }
 
 
-Future imageupload(String filename) async {
-  String id = await storage.read(key: 'user_id');
-  final prefs = await SharedPreferences.getInstance();
+Future imageUpload(String filename) async {
   Map<String, String> headers = {
     "content-type": "application/json",
     "Authorization": "Token " + await storage.read(key: 'skey')
   };
-  print("STORAGE" + await storage.read(key: 'user_id').toString());
+  print("STORAGE" +  storage.read(key: 'user_id').toString());
   var request = http.MultipartRequest(
       'POST', Uri.parse(HOST_URL + '/api/posts/imageupload/'));
   // request.fields['username'] = prefs.getString('username');

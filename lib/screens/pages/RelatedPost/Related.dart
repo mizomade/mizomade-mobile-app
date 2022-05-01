@@ -4,7 +4,7 @@ import 'package:mizomade/widgets/SmallCard.dart';
 
 class Related extends StatefulWidget {
   // const Related({Key key}) : super(key: key);
-  List relatedList;
+  final List relatedList;
 
   Related({this.relatedList});
 

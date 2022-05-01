@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:mizomade/Helpers/DatabaseHelper.dart';
 import 'package:mizomade/models/CategoryDBModel.dart';
 import 'package:mizomade/models/PostListModel.dart';
@@ -66,16 +65,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    List buildTextViews(int count) {
-      List<Widget> strings = List();
-      for (int i = 0; i < count; i++) {
-        strings.add(new Padding(
-            padding: new EdgeInsets.all(16.0),
-            child: new Text("Item number " + i.toString(),
-                style: new TextStyle(fontSize: 20.0))));
-      }
-      return strings;
-    }
 
     return Scaffold(
       body: NestedScrollView(
@@ -104,6 +93,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               height: MediaQuery.of(context).size.height,
               child: PagedListView<int, Results>.separated(
                 pagingController: _pagingController,
+                separatorBuilder: (BuildContext context, int index) => const Divider(),
+
 
                 builderDelegate: PagedChildBuilderDelegate<Results>(
                   animateTransitions: true,

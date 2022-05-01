@@ -71,14 +71,14 @@ class _SearchResultPageState extends State<SearchResultPage> {
             SizedBox(
               height: 10,
             ),
-            Suggestions(context),
+            suggestions(context),
           ],
         ),
       ),
     );
   }
 
-  Widget Suggestions(BuildContext context) {
+  Widget suggestions(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.8,
       child: FutureBuilder(
@@ -88,7 +88,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
               return ListView.builder(
                   itemCount: snapshot.data[0].length,
                   itemBuilder: (context, index) {
-                    return SugeestionCards(
+                    return suggestionCards(
                         context,
                         snapshot.data[0][index]['id'].toString(),
                         snapshot.data[0][index]['title'],
@@ -99,6 +99,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
                   });
             } else if (snapshot.hasError) {
               print("Error");
+              return Text("Connection Error");
             } else {
               return const SizedBox();
             }
@@ -107,7 +108,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
   }
 }
 
-Widget SugeestionCards(BuildContext context, String id, String title,
+Widget suggestionCards(BuildContext context, String id, String title,
     String date, String author, String coverphoto, String slug) {
   return GestureDetector(
     onTap: () {
@@ -171,12 +172,4 @@ Widget SugeestionCards(BuildContext context, String id, String title,
   );
 }
 
-Widget TagsChip() {
-  return InputChip(
-    label: Text(
-      'Eisiam',
-      style: TextStyle(color: Colors.black54),
-    ),
-    onSelected: (bool value) {},
-  );
-}
+

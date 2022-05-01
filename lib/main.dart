@@ -23,7 +23,7 @@ void main() {
 
 
 class MyApp extends StatelessWidget {
-  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   // This widget is the root of your application.
   @override

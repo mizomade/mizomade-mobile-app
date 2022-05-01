@@ -4,11 +4,11 @@ import 'package:mizomade/utils/API.dart';
 
 class SmallCard extends StatelessWidget {
   // const SmallCard({Key key}) : super(key: key);
-  String author;
-  String title;
-  String coverimage;
-  String authorphoto;
-  String date;
+  final String author;
+  final String title;
+  final String coverimage;
+  final String authorphoto;
+  final String date;
 
   SmallCard(
       {this.author, this.title, this.coverimage, this.authorphoto, this.date});

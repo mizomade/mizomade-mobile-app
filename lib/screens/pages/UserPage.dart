@@ -6,7 +6,7 @@ import 'PostDetail.dart';
 
 class UserPage extends StatefulWidget {
   // const UserPage({Key key}) : super(key: key);
-  String username;
+  final String username;
 
   UserPage({this.username});
 
@@ -171,7 +171,7 @@ class _UserPageState extends State<UserPage> {
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: snapshot.data[2].length,
                           itemBuilder: (context, index) {
-                            return SugeestionCards(
+                            return suggestionCards(
                                 snapshot.data[2][index]['id'].toString(),
                                 snapshot.data[2][index]['title'].toString(),
                                 snapshot.data[2][index]['date'].toString(),
@@ -193,8 +193,8 @@ class _UserPageState extends State<UserPage> {
             }));
   }
 
-  Widget SugeestionCards(
-      String id, String title, String date, String coverimage, String slug) {
+  Widget suggestionCards(
+      String id, String title, String date, String coverImage, String slug) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -213,9 +213,9 @@ class _UserPageState extends State<UserPage> {
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: coverimage != 'null'
+                child: coverImage != 'null'
                     ? Image.network(
-                        coverimage,
+                        coverImage,
                         width: 110,
                         height: 80,
                         fit: BoxFit.fill,

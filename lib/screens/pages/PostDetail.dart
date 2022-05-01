@@ -16,8 +16,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class PostDetail extends StatefulWidget {
   // const PostDetail({Key? key}) : super(key: key);
-  String slug;
-  String id;
+  final String slug;
+  final String id;
 
   PostDetail({this.slug, this.id});
 
@@ -26,37 +26,37 @@ class PostDetail extends StatefulWidget {
 }
 
 class _PostDetailState extends State<PostDetail> {
-  bool likestatus;
-  bool bookmarkstatus;
+  bool likeStatus;
+  bool bookmarkStatus;
   final FocusNode _focusNode = FocusNode();
 
 
 
-  void CheckInitialStatus() async {
-    var LikeResult = await checkLikeStatus(widget.id.toString());
-    if (LikeResult == 1) {
+  void checkInitialStatus() async {
+    var likeResult = await checkLikeStatus(widget.id.toString());
+    if (likeResult == 1) {
       setState(() {
-        likestatus = true;
+        likeStatus = true;
       });
-    } else if (LikeResult == 0) {
+    } else if (likeResult == 0) {
       setState(() {
-        likestatus = false;
+        likeStatus = false;
       });
     }
-    var Bookmarkresult = await checkBookmarkStatus(widget.id.toString());
-    if (Bookmarkresult == 1) {
+    var bookmarkResult = await checkBookmarkStatus(widget.id.toString());
+    if (bookmarkResult == 1) {
       setState(() {
-        bookmarkstatus = true;
+        bookmarkStatus = true;
       });
-    } else if (Bookmarkresult == 0) {
+    } else if (bookmarkResult == 0) {
       setState(() {
-        bookmarkstatus = false;
+        bookmarkStatus = false;
       });
     }
   }
 
-  Future postdetail;
-  var JsonContent;
+  Future postDetail;
+  var jsonContent;
 
   // final AdSize adSize = AdSize(width: 300,height: 50);
   // final BannerAdListener listener = BannerAdListener(
@@ -86,8 +86,8 @@ class _PostDetailState extends State<PostDetail> {
   @override
   void initState() {
     super.initState();
-    postdetail = fetchdetail(widget.slug);
-    CheckInitialStatus();
+    postDetail = fetchdetail(widget.slug);
+    checkInitialStatus();
     print(widget.id);
     // myBanner.load();
     // final AdWidget adWidget = AdWidget(ad: myBanner);
@@ -125,7 +125,7 @@ class _PostDetailState extends State<PostDetail> {
           child: SizedBox(
 
             child: FutureBuilder(
-                future: postdetail,
+                future: postDetail,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
 
@@ -223,7 +223,7 @@ class _PostDetailState extends State<PostDetail> {
                                         children: [
                                           IconButton(
                                               splashColor: Colors.pink[50],
-                                              icon: likestatus == true
+                                              icon: likeStatus == true
                                                   ? Icon(
                                                       Icons.favorite_outlined,
                                                       color: Colors.pink,
@@ -239,17 +239,17 @@ class _PostDetailState extends State<PostDetail> {
 
                                                 if (result.toString() == "1") {
                                                   setState(() {
-                                                    likestatus = true;
+                                                    likeStatus = true;
                                                   });
                                                 } else if (result.toString() ==
                                                     "0") {
                                                   setState(() {
-                                                    likestatus = false;
+                                                    likeStatus = false;
                                                   });
                                                 }
                                               }),
                                           IconButton(
-                                              icon: bookmarkstatus == true
+                                              icon: bookmarkStatus == true
                                                   ? Icon(
                                                       Icons.bookmark_outlined,
 
@@ -265,12 +265,12 @@ class _PostDetailState extends State<PostDetail> {
 
                                                 if (result.toString() == "1") {
                                                   setState(() {
-                                                    bookmarkstatus = true;
+                                                    bookmarkStatus = true;
                                                   });
                                                 } else if (result.toString() ==
                                                     "0") {
                                                   setState(() {
-                                                    bookmarkstatus = false;
+                                                    bookmarkStatus = false;
                                                   });
                                                 }
                                               })

@@ -18,7 +18,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  GlobalKey Globalscaffoldkey = GlobalKey<ScaffoldState>();
+  GlobalKey globalScaffoldKey = GlobalKey<ScaffoldState>();
   int selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -52,7 +52,7 @@ class _MainPageState extends State<MainPage> {
       return provider.isAuthenticated == true
           ? Scaffold(
               body: IndexedStack(
-                  key: Globalscaffoldkey,
+                  key: globalScaffoldKey,
                   index: selectedIndex,
                   children: widgetOptions),
               bottomNavigationBar: SizedBox(

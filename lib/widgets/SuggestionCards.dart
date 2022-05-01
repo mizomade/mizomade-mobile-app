@@ -6,14 +6,14 @@ import 'package:mizomade/utils/API.dart';
 class SuggestionCards extends StatelessWidget {
   // const SuggestionCards({Key key}) : super(key: key);
 
-  String title;
-  String user;
-  String date;
-  String category;
-  String coverimage;
+  final String title;
+  final String user;
+  final String date;
+  final String category;
+  final String coverImage;
 
   SuggestionCards(
-      {this.title, this.user, this.date, this.category, this.coverimage});
+      {this.title, this.user, this.date, this.category, this.coverImage});
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +25,9 @@ class SuggestionCards extends StatelessWidget {
         children: [
           ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: coverimage.toString() != "null"
+              child: coverImage.toString() != "null"
                   ? Image.network(
-                      coverimage,
+                      coverImage,
                       width: 110,
                       height: 80,
                       fit: BoxFit.cover,

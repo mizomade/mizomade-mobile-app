@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:http/http.dart' as http;
 
 import 'package:mizomade/models/PostListModel.dart';
 import 'package:mizomade/screens/pages/PostDetail.dart';
@@ -11,15 +9,15 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class CategoryPage extends StatefulWidget {
   // const CategoryPage({Key key}) : super(key: key);
-  String category;
+  final String category;
 
   CategoryPage({this.category});
 
   @override
-  _CategoryPageState createState() => _CategoryPageState();
+  CategoryPageState createState() => CategoryPageState();
 }
 
-class _CategoryPageState extends State<CategoryPage>
+class CategoryPageState extends State<CategoryPage>
     with SingleTickerProviderStateMixin {
   Future postlist;
 
@@ -57,18 +55,7 @@ class _CategoryPageState extends State<CategoryPage>
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
-    List buildTextViews(int count) {
-      List<Widget> strings = List();
-      for (int i = 0; i < count; i++) {
-        strings.add(new Padding(
-            padding: new EdgeInsets.all(16.0),
-            child: new Text("Item number " + i.toString(),
-                style: new TextStyle(fontSize: 20.0))));
-      }
-      return strings;
-    }
 
     return Scaffold(
       body: NestedScrollView(
@@ -103,8 +90,10 @@ class _CategoryPageState extends State<CategoryPage>
               height: MediaQuery.of(context).size.height,
               child: PagedListView<int, Results>.separated(
                 pagingController: _pagingController,
+                separatorBuilder: (BuildContext context, int index) => const Divider(),
 
                 builderDelegate: PagedChildBuilderDelegate<Results>(
+
                   animateTransitions: true,
                   itemBuilder: (context, item, index) => GestureDetector(
                     onTap: () {

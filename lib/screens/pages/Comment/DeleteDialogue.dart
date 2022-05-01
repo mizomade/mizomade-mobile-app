@@ -6,10 +6,10 @@ import 'CommentList.dart';
 
 class DeleteDialogue extends StatefulWidget {
   // const DeleteDialogue({Key key}) : super(key: key);
-  String comment_id;
-  String id;
+  final String commentId;
+  final String id;
 
-  DeleteDialogue({this.comment_id, this.id});
+  DeleteDialogue({this.commentId, this.id});
 
   @override
   _DeleteDialogueState createState() => _DeleteDialogueState();
@@ -40,7 +40,7 @@ class _DeleteDialogueState extends State<DeleteDialogue> {
               elevation: 0,
             ),
             onPressed: () async {
-              bool result = await deleteComment(widget.comment_id.toString());
+              bool result = await deleteComment(widget.commentId.toString());
               if (result == true) {
                 CustomUtils.infoSnackBar(context, "Comment Deleted!");
                 Navigator.pop(context);

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:mizomade/screens/pages/PostDetail.dart';
 import 'package:mizomade/utils/Network.dart';
 import 'package:mizomade/widgets/PostCard.dart';

@@ -4,25 +4,24 @@ import 'package:image_cropper/image_cropper.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:mizomade/screens/pages/MainPage.dart';
-import 'package:mizomade/screens/pages/Tabs/Home.dart';
 import 'package:mizomade/utils/Network.dart';
 
 class CreateAddMeta extends StatefulWidget {
   // const CreateAddMeta({Key key}) : super(key: key);
 
   @override
-  State<CreateAddMeta> createState() => _CreateAddMetaState();
-  String id;
+  State<CreateAddMeta> createState() => CreateAddMetaState();
+  final String id;
 
   CreateAddMeta({this.id});
 }
 
-class _CreateAddMetaState extends State<CreateAddMeta> {
+class CreateAddMetaState extends State<CreateAddMeta> {
   TextEditingController _title = TextEditingController();
 
   TextEditingController _tags = TextEditingController();
 
-  String categorydropdownValue = 'Eisiam';
+  String categoryDropdownValue = 'Eisiam';
 
   File coverPhoto;
 
@@ -64,7 +63,7 @@ class _CreateAddMetaState extends State<CreateAddMeta> {
                   borderRadius: BorderRadius.circular(5),
                   color: Colors.grey.shade200),
               child: DropdownButton<String>(
-                value: categorydropdownValue,
+                value: categoryDropdownValue,
                 hint: Container(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text("Select Category")),
@@ -77,7 +76,7 @@ class _CreateAddMetaState extends State<CreateAddMeta> {
                 ),
                 onChanged: (String newValue) {
                   setState(() {
-                    categorydropdownValue = newValue;
+                    categoryDropdownValue = newValue;
                   });
                 },
                 items: <String>['Eisiam', 'Infiamna', 'Gospel', 'Zirna']
@@ -132,7 +131,7 @@ class _CreateAddMetaState extends State<CreateAddMeta> {
                   publishPost(
                       widget.id.toString(),
                       _title.text,
-                      categorydropdownValue.toString(),
+                      categoryDropdownValue.toString(),
                       coverPhoto.path,
                       _tags.text);
                   Navigator.pushAndRemoveUntil(

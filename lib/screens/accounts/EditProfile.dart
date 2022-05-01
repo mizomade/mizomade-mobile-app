@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 import 'package:image_picker/image_picker.dart';
-import 'package:mizomade/utils/API.dart';
 import 'package:mizomade/utils/Network.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,8 +16,8 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   TextEditingController _username = TextEditingController();
-  TextEditingController _first_name = TextEditingController();
-  TextEditingController _last_name = TextEditingController();
+  TextEditingController _firstName = TextEditingController();
+  TextEditingController _lastName = TextEditingController();
   TextEditingController _bio = TextEditingController();
   TextEditingController _coverphotoLink = TextEditingController();
   TextEditingController _profilephotoLink = TextEditingController();
@@ -31,8 +30,8 @@ class _EditProfileState extends State<EditProfile> {
     var prefs = await SharedPreferences.getInstance();
     setState(() {
       _username.text = prefs.getString('username').toString();
-      _first_name.text = prefs.getString('first_name');
-      _last_name.text = prefs.getString('last_name');
+      _firstName.text = prefs.getString('first_name');
+      _lastName.text = prefs.getString('last_name');
 
       _bio.text = prefs.getString('bio');
       _coverphotoLink.text = prefs.getString('coverphoto');
@@ -128,7 +127,7 @@ class _EditProfileState extends State<EditProfile> {
                 height: 10,
               ),
               TextFormField(
-                controller: _first_name,
+                controller: _firstName,
                 decoration: InputDecoration(
                   suffixIcon: Icon(
                     Icons.person_outlined,
@@ -141,7 +140,7 @@ class _EditProfileState extends State<EditProfile> {
                 height: 10,
               ),
               TextFormField(
-                controller: _last_name,
+                controller: _lastName,
                 decoration: InputDecoration(
                   suffixIcon: Icon(
                     Icons.person_outlined,
@@ -186,8 +185,8 @@ class _EditProfileState extends State<EditProfile> {
                   width: MediaQuery.of(context).size.width,
                   child: ElevatedButton(
                       onPressed: () {
-                        updateProfile(_username.text, _first_name.text,
-                            _last_name.text, _bio.text);
+                        updateProfile(_username.text, _firstName.text,
+                            _lastName.text, _bio.text);
                       },
                       child: Text("Save")))
             ],

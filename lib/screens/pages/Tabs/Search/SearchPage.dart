@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:mizomade/Helpers/DatabaseHelper.dart';
 import 'package:mizomade/models/CategoryDBModel.dart';
 import 'package:mizomade/screens/pages/CategoryPage.dart';
@@ -86,7 +85,7 @@ class _SearchPageState extends State<SearchPage> {
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, index) {
                         // return TagsChip(snapshot.data[index].name.toString());
-                        return CategoryChip(
+                        return categoryChip(
                             snapshot.data[index]['name'].toString());
 
                         // return Text("asdfas");
@@ -95,7 +94,7 @@ class _SearchPageState extends State<SearchPage> {
                   } else if (snapshot.hasError) {
                     return Text("..");
                   } else {
-                    return CategoryChip("       ");
+                    return categoryChip("       ");
                   }
                 }),
           ),
@@ -110,7 +109,7 @@ class _SearchPageState extends State<SearchPage> {
                 avatar: Icon(Icons.stream),
                 disabledColor: Theme.of(context).disabledColor),
           ),
-          FeaturedPosts(),
+          featuredPostsList(),
 
           // Suggestions(),
         ],
@@ -118,7 +117,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget CategoryChip(String text) {
+  Widget categoryChip(String text) {
     return InputChip(
       label: Text(
         text,
@@ -135,7 +134,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget FeaturedPosts() {
+  Widget featuredPostsList() {
     return FutureBuilder(
         future: featuredPosts(),
         builder: (BuildContext context, snapshot) {
@@ -146,7 +145,7 @@ class _SearchPageState extends State<SearchPage> {
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, index) {
                   // return Text(snapshot.data[index]['title']);
-                  return SearchSuggestionCards(
+                  return searchSuggestionCards(
                     context,
                     snapshot.data[index]['id'].toString(),
                     snapshot.data[index]['title'].toString(),

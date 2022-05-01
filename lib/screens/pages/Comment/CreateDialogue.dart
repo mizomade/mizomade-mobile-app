@@ -6,8 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateDialogue extends StatefulWidget {
   // const CreateDialogue({Key key}) : super(key: key);
-  String id;
-  String username;
+  final String id;
+  final String username;
 
   CreateDialogue({this.id, this.username});
 
@@ -17,19 +17,19 @@ class CreateDialogue extends StatefulWidget {
 
 class _CreateDialogueState extends State<CreateDialogue> {
   TextEditingController comment = TextEditingController();
-  String profilephoto;
+  String profilePhoto;
 
-  void getuservalues() async {
+  void getUserValues() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      profilephoto = prefs.getString('profilephoto');
+      profilePhoto = prefs.getString('profilephoto');
     });
   }
 
   @override
   void initState() {
     super.initState();
-    getuservalues();
+    getUserValues();
   }
 
   @override
@@ -56,7 +56,7 @@ class _CreateDialogueState extends State<CreateDialogue> {
                   leading: CircleAvatar(
                     child: ClipOval(
                       child: Image.network(
-                        profilephoto,
+                        profilePhoto,
                         height: 40,
                         width: 40,
                         fit: BoxFit.cover,

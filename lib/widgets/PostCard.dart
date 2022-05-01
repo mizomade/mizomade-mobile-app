@@ -5,11 +5,11 @@ import 'package:mizomade/utils/API.dart';
 
 class PostCard extends StatefulWidget {
   // const PostCard({Key key}) : super(key: key);
-  String title;
-  String author;
-  String date;
-  String coverimage;
-  String authorimage;
+  final String title;
+  final String author;
+  final String date;
+  final String coverimage;
+  final String authorimage;
 
   PostCard(
       {this.coverimage, this.title, this.authorimage, this.author, this.date});
@@ -19,14 +19,7 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
-  String dateFormatted;
 
-  @override
-  void initState() {
-    super.initState();
-    dateFormatted =
-        DateFormat("dd MMM yyyy").format(DateTime.parse(widget.date));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +95,7 @@ class _PostCardState extends State<PostCard> {
                                   letterSpacing: 2,
                                   fontWeight: FontWeight.w600),
                             ),
-                            Text(dateFormatted,
+                            Text(DateFormat("dd MMM yyyy").format(DateTime.parse(widget.date)),
                                 style: GoogleFonts.abel(
                                     fontSize: 12, letterSpacing: 2)),
                           ],

@@ -141,4 +141,9 @@ class _OTPPasswordState extends State<OTPPassword> {
       ),
     );
   }
+  @override
+  void dispose(){
+    errorController.close();
+    super.dispose();
+  }
 }

@@ -145,7 +145,7 @@ class _CreatePostState extends State<CreatePost> {
   // or Firebase) and then return the uploaded image URL.
   Future<String> _onImagePickCallback(File file) async {
     // Copies the picked file from temporary cache to applications directory
-    final fileUrl = await imageupload(file.path);
+    final fileUrl = await imageUpload(file.path);
     // final appDocDir = await getApplicationDocumentsDirectory();
     // final copiedFile =
         // await file.copy('${appDocDir.path}/${basename(file.path)}');

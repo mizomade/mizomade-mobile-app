@@ -27,7 +27,6 @@ class _MyProfilePageState extends State<MyProfilePage> {
   String profilephoto = "";
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  TextEditingController _search = TextEditingController();
 
   void startingServices() async {
     getMyProfile();
@@ -90,7 +89,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
               ];
             },
             body: new TabBarView(children: [
-              Profile(context),
+              profile(context),
               Container(
                 child: Text("Articles Body"),
               ),
@@ -99,7 +98,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
     );
   }
 
-  Widget Profile(BuildContext context) {
+  Widget profile(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () => Future.sync(() {
         setState(() {
@@ -110,11 +109,11 @@ class _MyProfilePageState extends State<MyProfilePage> {
         child: Container(
           child: Column(
             children: [
-              ProfileDetailsBlock(context),
+              profileDetailsBlock(context),
               Divider(
                 height: 20,
               ),
-              UsersPosts(context)
+              usersPosts(context)
             ],
           ),
         ),
@@ -122,7 +121,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
     );
   }
 
-  Widget ProfileDetailsBlock(BuildContext context) {
+  Widget profileDetailsBlock(BuildContext context) {
     return FutureBuilder(
         future: postlist,
         builder: (context, snapshot) {
@@ -211,12 +210,12 @@ class _MyProfilePageState extends State<MyProfilePage> {
           // }
           else
             return Center(
-              child: ProfileBlockLoading(context),
+              child: profileBlockLoading(context),
             );
         });
   }
 
-  Widget ProfileBlockLoading(BuildContext context) {
+  Widget profileBlockLoading(BuildContext context) {
     return Shimmer.fromColors(
       baseColor: Colors.grey[300],
       highlightColor: Colors.white,
@@ -303,7 +302,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
     );
   }
 
-  Widget UsersPosts(BuildContext context) {
+  Widget usersPosts(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
         padding: const EdgeInsets.only(left: 10),
@@ -346,7 +345,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                               title:
                                   snapshot.data[2][index]['title'].toString(),
                               date: snapshot.data[2][index]['date'].toString(),
-                              coverimage: snapshot.data[2][index]['coverimage']
+                              coverImage: snapshot.data[2][index]['coverimage']
                                   .toString()),
                         )
                       : SizedBox();
@@ -363,7 +362,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
     ]);
   }
 
-  Widget UsersDrafts(BuildContext context) {
+  Widget usersDrafts(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
         padding: const EdgeInsets.only(left: 10),
@@ -392,7 +391,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                     child: SuggestionCards(
                         title: snapshot.data[2][index]['title'].toString(),
                         date: snapshot.data[2][index]['date'].toString(),
-                        coverimage:
+                        coverImage:
                             snapshot.data[2][index]['coverimage'].toString()),
                   );
                 });

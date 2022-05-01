@@ -160,4 +160,11 @@ class _OTPRegisterState extends State<OTPRegister> {
       ),
     );
   }
+
+
+  @override
+  void dispose(){
+    errorController.close();
+    super.dispose();
+  }
 }

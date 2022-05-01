@@ -6,14 +6,15 @@ import 'package:mizomade/models/PostListModel.dart';
 import 'package:mizomade/utils/API.dart';
 
 Future<List<PostListModel>> fetchPages(String page) async {
-  List<PostListModel> myModels;
 
   var response = await http.get(Uri.parse(API_URL + 'posts/?page=' + page));
+  var list;
+
   if (response.statusCode == 200) {
     // print(response.body);
     print("TESTING CONVERSION ");
     // var parsedListJson = jsonDecode(response.body);
-    var list = jsonDecode(response.body)
+     list = jsonDecode(response.body)
         .map((data) => PostListModel.fromJson(data))
         .toList();
     print("LIST");
@@ -25,6 +26,7 @@ Future<List<PostListModel>> fetchPages(String page) async {
     return list;
   } else {
     print("Error");
+    return list;
   }
 }
 

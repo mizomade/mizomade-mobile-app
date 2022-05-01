@@ -6,7 +6,7 @@ import 'package:mizomade/widgets/PostCardShimmer.dart';
 
 class TagPage extends StatefulWidget {
   // const SavedPosts({Key key}) : super(key: key);
-  String tag;
+  final String tag;
 
   TagPage({this.tag});
 

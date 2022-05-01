@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../screens/pages/PostDetail.dart';
 import '../utils/API.dart';
 
-Widget SearchSuggestionCards(BuildContext context, String id, String title,
+Widget searchSuggestionCards(BuildContext context, String id, String title,
     String date, String author, String image, String slug) {
   return GestureDetector(
     onTap: () {

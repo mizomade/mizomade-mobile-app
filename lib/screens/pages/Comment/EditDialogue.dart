@@ -6,26 +6,26 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class EditDialogue extends StatefulWidget {
   // const CreateDialogue({Key key}) : super(key: key);
-  String id;
-  String comment_id;
-  String username;
-  String content;
+  final String id;
+  final String commentId;
+  final String username;
+  final String content;
 
-  EditDialogue({this.id, this.comment_id, this.username, this.content});
+  EditDialogue({this.id, this.commentId, this.username, this.content});
 
   @override
   _EditDialogueState createState() => _EditDialogueState();
 }
 
 class _EditDialogueState extends State<EditDialogue> {
-  String profilephoto;
+  String profilePhoto;
 
-  void getuservalues() async {
+  void getUserValues() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       comment.text = widget.content.toString();
 
-      profilephoto = prefs.getString('profilephoto');
+      profilePhoto = prefs.getString('profilephoto');
     });
   }
 
@@ -34,7 +34,7 @@ class _EditDialogueState extends State<EditDialogue> {
   @override
   void initState() {
     super.initState();
-    getuservalues();
+    getUserValues();
   }
 
   @override
@@ -61,7 +61,7 @@ class _EditDialogueState extends State<EditDialogue> {
                   leading: CircleAvatar(
                     child: ClipOval(
                       child: Image.network(
-                        profilephoto,
+                        profilePhoto,
                         height: 40,
                         width: 40,
                         fit: BoxFit.cover,
@@ -100,7 +100,7 @@ class _EditDialogueState extends State<EditDialogue> {
                       ),
                       onPressed: () async {
                         bool result =
-                            await editComment(widget.comment_id, comment.text);
+                            await editComment(widget.commentId, comment.text);
                         if (result == true) {
                           CustomUtils.infoSnackBar(context, "Commented!");
                           Navigator.pop(context);

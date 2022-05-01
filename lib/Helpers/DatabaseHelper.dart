@@ -84,7 +84,7 @@ class DatabaseHelper {
   }
 
   Future<void> deleteDatabase()async{
-    String path = await getDatabasesPath();
+    // String path = await getDatabasesPath();
     databaseFactory.deleteDatabase('mizomade.db');
   }
 

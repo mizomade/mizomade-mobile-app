@@ -10,7 +10,7 @@ import '../../../utils/Network.dart';
 
 class CommentList extends StatefulWidget {
   // const CommentList({Key key}) : super(key: key);
-  String id;
+  final String id;
 
   CommentList({this.id});
 
@@ -19,27 +19,27 @@ class CommentList extends StatefulWidget {
 }
 
 class _CommentListState extends State<CommentList> {
-  Future commentlist;
+  Future commentList;
   String username;
-  String profilephoto;
+  String profilePhoto;
 
-  fetchusername() async {
+  fetchUsername() async {
     String value = await storage.read(key: 'username');
     print(value);
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       username = value;
-      profilephoto = prefs.getString('profilephoto');
+      profilePhoto = prefs.getString('profilephoto');
     });
   }
 
   @override
   void initState() {
     super.initState();
-    fetchusername();
+    fetchUsername();
 
     setState(() {
-      commentlist = fetchComments(widget.id);
+      commentList = fetchComments(widget.id);
     });
   }
 
@@ -88,7 +88,7 @@ class _CommentListState extends State<CommentList> {
               leading: CircleAvatar(
                 child: ClipOval(
                   child: Image.network(
-                    profilephoto,
+                    profilePhoto,
                     height: 40,
                     width: 40,
                     fit: BoxFit.cover,
@@ -110,7 +110,7 @@ class _CommentListState extends State<CommentList> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.65,
               child: FutureBuilder(
-                future: commentlist,
+                future: commentList,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
@@ -150,7 +150,7 @@ class _CommentListState extends State<CommentList> {
                                                     builder: (context) =>
                                                         EditDialogue(
                                                           id: widget.id,
-                                                          comment_id: snapshot
+                                                          commentId: snapshot
                                                               .data[index]['id']
                                                               .toString(),
                                                           content: snapshot
@@ -169,7 +169,7 @@ class _CommentListState extends State<CommentList> {
                                                     context: context,
                                                     builder: (context) =>
                                                         DeleteDialogue(
-                                                            comment_id: snapshot
+                                                            commentId: snapshot
                                                                 .data[index]
                                                                     ['id']
                                                                 .toString(),
