@@ -5,10 +5,7 @@ import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:mizomade/screens/Action/CreatePost/CreateAddMeta.dart';
 import 'package:mizomade/utils/CustomUtils.dart';
 import 'package:mizomade/utils/Network.dart';
-import 'package:path_provider/path_provider.dart';
 import 'dart:io';
-import 'package:file_picker/file_picker.dart';
-import 'package:path/path.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({Key key}) : super(key: key);

@@ -27,6 +27,7 @@ class ThemeProvider extends ChangeNotifier{
 
 class MyThemes{
   static final darkTheme= ThemeData(
+    primarySwatch: Colors.deepPurple,
     scaffoldBackgroundColor: Colors.grey.shade900,
     primaryColor: Colors.black,
     // unselectedWidgetColor: Colors.black26,
@@ -55,6 +56,7 @@ class MyThemes{
   );
 
   static final lightTheme = ThemeData(
+    primarySwatch: Colors.deepPurple,
     scaffoldBackgroundColor: Colors.white,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(

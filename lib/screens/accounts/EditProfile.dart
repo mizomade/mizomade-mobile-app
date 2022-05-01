@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:mizomade/utils/API.dart';
 import 'package:mizomade/utils/Network.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 class EditProfile extends StatefulWidget {
   const EditProfile({Key key}) : super(key: key);
 
@@ -16,7 +16,6 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-
   TextEditingController _username = TextEditingController();
   TextEditingController _first_name = TextEditingController();
   TextEditingController _last_name = TextEditingController();
@@ -24,7 +23,7 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController _coverphotoLink = TextEditingController();
   TextEditingController _profilephotoLink = TextEditingController();
 
-bool usernamevalid = true;
+  bool usernamevalid = true;
   File profilePhoto;
   File coverPhoto;
 
@@ -36,32 +35,28 @@ bool usernamevalid = true;
       _last_name.text = prefs.getString('last_name');
 
       _bio.text = prefs.getString('bio');
-      _coverphotoLink.text = HOST_URL +  prefs.getString('coverphoto');
-      _profilephotoLink.text = HOST_URL + prefs.getString('profilephoto');
-      print(_profilephotoLink.text);
+      _coverphotoLink.text = prefs.getString('coverphoto');
+      _profilephotoLink.text = prefs.getString('profilephoto');
     });
-
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     initFetch();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
         elevation: 2,
-        title: Text("Edit Profile",style: TextStyle(color: Colors.black87),),
-        leading: IconButton(icon: Icon(Icons.arrow_back_outlined,color:  Colors.black ),onPressed: (){
-          setState(() {
-            Navigator.pop(context);
-          });},),
+        title: Text(
+          "Edit Profile",
+          style: TextStyle(color: Colors.black87),
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -69,67 +64,69 @@ bool usernamevalid = true;
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 10,),
-
-
+              SizedBox(
+                height: 10,
+              ),
               CircleAvatar(
                 radius: 70,
                 child: ClipOval(
-                    child:
-                    profilePhoto == null ?
-                    Image.network(
-                    _profilephotoLink.text,
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
-                    ):Image.file(profilePhoto,fit: BoxFit.cover,height: 100,width: 100,) ),
+                    child: profilePhoto == null
+                        ? Image.network(
+                            _profilephotoLink.text,
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.file(
+                            profilePhoto,
+                            fit: BoxFit.cover,
+                            height: 100,
+                            width: 100,
+                          )),
                 backgroundColor: Colors.transparent,
               ),
-              TextButton(onPressed: (){
-                _getProfileFromGallery();
-              }, child: Text("Update Profile Photo")),
-              SizedBox(height: 20,),
-
+              TextButton(
+                  onPressed: () {
+                    _getProfileFromGallery();
+                  },
+                  child: Text("Update Profile Photo")),
+              SizedBox(
+                height: 20,
+              ),
               Visibility(
                   visible: usernamevalid,
                   child: Text("Choose another username")),
-
               TextFormField(
                 controller: _username,
                 decoration: InputDecoration(
                   suffixIcon: Icon(
                     Icons.alternate_email_outlined,
                   ),
-                  border: OutlineInputBorder(
-
-                  ),
+                  border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        // color: usernamevalid == true ? Colors.green : Colors.red,
-                      )
-                  ),
+                          // color: usernamevalid == true ? Colors.green : Colors.red,
+                          )),
                   labelText: "Username",
                 ),
-                onChanged: (value)async{
-                  bool result =  await checkUsername(_username.text);
-                  print("RESULT"+  result.toString());
-                  if(result){
+                onChanged: (value) async {
+                  bool result = await checkUsername(_username.text);
+                  print("RESULT" + result.toString());
+                  if (result) {
                     print("TRUEEEE");
                     setState(() {
-                      usernamevalid =true;
-
+                      usernamevalid = true;
                     });
-                  }
-                  else
+                  } else
                     print("FALSEESE");
                   setState(() {
                     usernamevalid = false;
-
                   });
                 },
               ),
-              SizedBox(height: 10,),
-
+              SizedBox(
+                height: 10,
+              ),
               TextFormField(
                 controller: _first_name,
                 decoration: InputDecoration(
@@ -140,8 +137,9 @@ bool usernamevalid = true;
                   labelText: "First Name",
                 ),
               ),
-              SizedBox(height: 10,),
-
+              SizedBox(
+                height: 10,
+              ),
               TextFormField(
                 controller: _last_name,
                 decoration: InputDecoration(
@@ -152,13 +150,13 @@ bool usernamevalid = true;
                   labelText: "Lastname",
                 ),
               ),
-              SizedBox(height: 20,),
-
+              SizedBox(
+                height: 20,
+              ),
               TextFormField(
                 controller: _bio,
                 maxLines: 3,
                 decoration: InputDecoration(
-
                   suffixIcon: Icon(
                     Icons.format_quote_outlined,
                   ),
@@ -166,35 +164,38 @@ bool usernamevalid = true;
                   labelText: "Bio",
                 ),
               ),
-              SizedBox(height: 20,),
-
+              SizedBox(
+                height: 20,
+              ),
               Container(
                 padding: EdgeInsets.only(bottom: 4),
-                child: coverPhoto == null ? Image.network(
-                    _coverphotoLink.text):
-                Image.file(coverPhoto,fit: BoxFit.fill,width: MediaQuery.of(context).size.width,),
+                child: coverPhoto == null
+                    ? Image.network(_coverphotoLink.text)
+                    : Image.file(
+                        coverPhoto,
+                        fit: BoxFit.fill,
+                        width: MediaQuery.of(context).size.width,
+                      ),
               ),
-              TextButton(onPressed: (){
-                _getCoverFromGallery();
-              }, child: Text("Update Cover Photo")),
-
+              TextButton(
+                  onPressed: () {
+                    _getCoverFromGallery();
+                  },
+                  child: Text("Update Cover Photo")),
               Container(
                   width: MediaQuery.of(context).size.width,
-                  child: ElevatedButton(onPressed: (){
-                    updateProfile( _username.text, _first_name.text, _last_name.text, _bio.text);
-
-
-                  }, child: Text("Save")))
-
-
-
+                  child: ElevatedButton(
+                      onPressed: () {
+                        updateProfile(_username.text, _first_name.text,
+                            _last_name.text, _bio.text);
+                      },
+                      child: Text("Save")))
             ],
           ),
         ),
       ),
     );
   }
-
 
   _getProfileFromGallery() async {
     XFile photo;
@@ -206,6 +207,7 @@ bool usernamevalid = true;
     );
     _cropProfileImage(photo.path);
   }
+
   _getCoverFromGallery() async {
     XFile photo;
     final ImagePicker _picker = ImagePicker();
@@ -216,22 +218,21 @@ bool usernamevalid = true;
     );
     _cropCoverImage(photo.path);
   }
+
   /// Crop Image
   _cropProfileImage(filePath) async {
     File croppedImage = (await ImageCropper.cropImage(
       androidUiSettings: AndroidUiSettings(
-        statusBarColor: Colors.black,
-        toolbarColor: Colors.white,
-        toolbarTitle: "Crop",
-        toolbarWidgetColor: Colors.black,
-        hideBottomControls: true
-      ),
+          statusBarColor: Colors.black,
+          toolbarColor: Colors.white,
+          toolbarTitle: "Crop",
+          toolbarWidgetColor: Colors.black,
+          hideBottomControls: true),
       sourcePath: filePath,
       maxWidth: 1080,
       maxHeight: 1080,
       aspectRatioPresets: [
         CropAspectRatioPreset.square,
-
       ],
     ));
     if (croppedImage != null) {
@@ -240,6 +241,7 @@ bool usernamevalid = true;
       setState(() {});
     }
   }
+
   _cropCoverImage(filePath) async {
     File croppedImage = (await ImageCropper.cropImage(
       androidUiSettings: AndroidUiSettings(
@@ -247,16 +249,11 @@ bool usernamevalid = true;
           toolbarColor: Colors.white,
           toolbarTitle: "Crop",
           toolbarWidgetColor: Colors.black,
-          hideBottomControls: true
-      ),
+          hideBottomControls: true),
       sourcePath: filePath,
       maxWidth: 1080,
       maxHeight: 1080,
-      aspectRatioPresets: [
-
-
-        CropAspectRatioPreset.ratio7x5
-      ],
+      aspectRatioPresets: [CropAspectRatioPreset.ratio7x5],
     ));
     if (croppedImage != null) {
       coverPhoto = croppedImage;
@@ -264,7 +261,4 @@ bool usernamevalid = true;
       setState(() {});
     }
   }
-
-
 }
-

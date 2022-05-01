@@ -2,11 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:mizomade/screens/pages/CategoryPage.dart';
 import 'package:mizomade/screens/pages/RelatedPost/Related.dart';
 import 'package:mizomade/screens/pages/UserPage.dart';
-import 'package:http/http.dart' as http;
 import 'package:mizomade/utils/API.dart';
 import 'package:mizomade/utils/Network.dart';
 import 'package:mizomade/utils/Texts.dart';
@@ -27,27 +26,11 @@ class PostDetail extends StatefulWidget {
 }
 
 class _PostDetailState extends State<PostDetail> {
-  var tags;
   bool likestatus;
   bool bookmarkstatus;
   final FocusNode _focusNode = FocusNode();
 
-  // QuillController _controller = QuillController.basic();
 
-  Future fetchdetail(String slug) async {
-    print("INITTTT");
-    var response = await http.get(Uri.parse(API_URL + 'posts/' + slug));
-    print("RESPONES" + json.decode(response.body).toString());
-
-    if (response.statusCode == 200) {
-
-      print("True");
-      tags = jsonDecode(response.body)['post']['tags'];
-      return jsonDecode(response.body);
-    } else {
-      print("Error");
-    }
-  }
 
   void CheckInitialStatus() async {
     var LikeResult = await checkLikeStatus(widget.id.toString());
@@ -75,43 +58,30 @@ class _PostDetailState extends State<PostDetail> {
   Future postdetail;
   var JsonContent;
 
-  // void updateContents(value)async{
-  //   print("Not DECODED" + value);
+  // final AdSize adSize = AdSize(width: 300,height: 50);
+  // final BannerAdListener listener = BannerAdListener(
+  //   // Called when an ad is successfully received.
+  //   onAdLoaded: (Ad ad) => print('Ad loaded.'),
+  //   // Called when an ad request failed.
+  //   onAdFailedToLoad: (Ad ad, LoadAdError error) {
+  //     // Dispose the ad here to free resources.
+  //     ad.dispose();
+  //     print('Ad failed to load: $error');
+  //   },
+  //   // Called when an ad opens an overlay that covers the screen.
+  //   onAdOpened: (Ad ad) => print('Ad opened.'),
+  //   // Called when an ad removes an overlay that covers the screen.
+  //   onAdClosed: (Ad ad) => print('Ad closed.'),
+  //   // Called when an impression occurs on the ad.
+  //   onAdImpression: (Ad ad) => print('Ad impression.'),
+  // );
   //
-  //   var decoded = await jsonDecode(value);
-  //   // print("DECODED" + decoded);
-  //   setState(() {
-  //     _controller = QuillController(
-  //         document: Document.fromJson(decoded),
-  //         selection: TextSelection.collapsed(offset: 0));
-  //   });
-  //  ;
-  // }
-
-  final AdSize adSize = AdSize(width: 300,height: 50);
-  final BannerAdListener listener = BannerAdListener(
-    // Called when an ad is successfully received.
-    onAdLoaded: (Ad ad) => print('Ad loaded.'),
-    // Called when an ad request failed.
-    onAdFailedToLoad: (Ad ad, LoadAdError error) {
-      // Dispose the ad here to free resources.
-      ad.dispose();
-      print('Ad failed to load: $error');
-    },
-    // Called when an ad opens an overlay that covers the screen.
-    onAdOpened: (Ad ad) => print('Ad opened.'),
-    // Called when an ad removes an overlay that covers the screen.
-    onAdClosed: (Ad ad) => print('Ad closed.'),
-    // Called when an impression occurs on the ad.
-    onAdImpression: (Ad ad) => print('Ad impression.'),
-  );
-
-  final BannerAd myBanner = BannerAd(
-    adUnitId: 'ca-app-pub-3940256099942544/6300978111',
-    size: AdSize.banner,
-    request: AdRequest(),
-    listener: BannerAdListener(),
-  );
+  // final BannerAd myBanner = BannerAd(
+  //   adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+  //   size: AdSize.banner,
+  //   request: AdRequest(),
+  //   listener: BannerAdListener(),
+  // );
 
   @override
   void initState() {
@@ -119,14 +89,14 @@ class _PostDetailState extends State<PostDetail> {
     postdetail = fetchdetail(widget.slug);
     CheckInitialStatus();
     print(widget.id);
-    myBanner.load();
-    final AdWidget adWidget = AdWidget(ad: myBanner);
-    final Container adContainer = Container(
-      alignment: Alignment.center,
-      child: adWidget,
-      width: myBanner.size.width.toDouble(),
-      height: myBanner.size.height.toDouble(),
-    );
+    // myBanner.load();
+    // final AdWidget adWidget = AdWidget(ad: myBanner);
+    // final Container adContainer = Container(
+    //   alignment: Alignment.center,
+    //   child: adWidget,
+    //   width: myBanner.size.width.toDouble(),
+    //   height: myBanner.size.height.toDouble(),
+    // );
 
 
   }
@@ -134,27 +104,7 @@ class _PostDetailState extends State<PostDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: PreferredSize(
-      //   preferredSize: Size.fromHeight(50),
-      //   child: AppBar(
-      //     backgroundColor: Colors.white,
-      //     elevation: 0.5,
-      //     title: Text(
-      //       "MizoMade",
-      //       style: TextStyle(color: Colors.black,letterSpacing: 3),
-      //     ),
-      //     leading: IconButton(
-      //       icon: Icon(
-      //         Icons.arrow_back_ios_outlined,
-      //         color: Colors.black,
-      //       ),
-      //
-      //       onPressed: () {
-      //         Navigator.pop(context);
-      //       },
-      //     ),
-      //   ),
-      // ),
+
       body: NestedScrollView(
         floatHeaderSlivers: true,
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
@@ -168,52 +118,23 @@ class _PostDetailState extends State<PostDetail> {
               style: TextStyle( letterSpacing: 2),
             ),
             centerTitle: false,
-            // backgroundColor: Colors.white,
-            // foregroundColor: Colors.black,
-            // leading: IconButton(
-            //   icon: Icon(Icons.arrow_back_outlined,color: Colors.black87,
-            //   ),
-            //   onPressed: (){
-            //     Navigator.pop(context);
-            //   },
-            // ),
+
           )
         ],
         body: SingleChildScrollView(
           child: SizedBox(
-            // width: double.infinity,
-            // height: MediaQuery.of(context).size.height*4,
-            // alignment: Alignment.topCenter,
-            // decoration: BoxDecoration(
-            //     image: DecorationImage(
-            //         image: NetworkImage(
-            //           "https://images.unsplash.com/flagged/photo-1566127992631-137a642a90f4",
-            //         ),
-            //         fit: BoxFit.cover)),
+
             child: FutureBuilder(
                 future: postdetail,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
 
-                      // updateContents(snapshot.data['post']['content']);
                       QuillController contentController = QuillController(
 
                           document: Document.fromJson(jsonDecode(snapshot.data['post']['content'])),
                           selection: TextSelection.collapsed(offset: 0),
 
                       );
-
-                      // JsonContent =  snapshot.data['post']['content'].toString();
-                      // JsonCodec codec = new JsonCodec();
-                      // try{
-                      //   var decoded = codec.decode( jsonDecode(snapshot.data['post']['content']));
-                      //   print("Decoded 1: $decoded");
-                      //   _controller = QuillController(
-                      //       document: Document.fromJson(decoded),
-                      // selection: TextSelection.collapsed(offset: 0));
-                      // } catch(e) {
-                      //   print("Error: $e");
-                      // }
 
 
 
@@ -229,7 +150,6 @@ class _PostDetailState extends State<PostDetail> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // Text("CATEGORY",style: TextStyle(fontWeight: FontWeight.bold,letterSpacing: 2,color: Colors.pink),),
 
                                 Text(
                                   snapshot.data['post']['title'].toString(),
@@ -369,7 +289,6 @@ class _PostDetailState extends State<PostDetail> {
                             width: MediaQuery.of(context).size.width,
                             height: 260,
                           )),
-                          // Text("This is content"),
 
                           // QUILL
 
@@ -405,13 +324,7 @@ class _PostDetailState extends State<PostDetail> {
                           //     ),
                           //   ),
                           // ),
-                          // QUILL EOL
-                          // Container(
-                          //     margin: EdgeInsets.all(10),
-                          //     child: Text(
-                          //       snapshot.data['post']['content'].toString(),
-                          //       style: TextStyle(fontSize: 16, wordSpacing: 2),
-                          //     )),
+
                           // After Content
                           Container(
                             padding: EdgeInsets.all(10),
@@ -421,19 +334,24 @@ class _PostDetailState extends State<PostDetail> {
                                 Row(
                                   children: [
                                     Text("Category : "),
-                                    Text(
-                                      snapshot.data['post']['category'].toString().toUpperCase(),
-                                      style: GoogleFonts.oswald(
+                                    GestureDetector(
+                                      onTap: (){
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=> CategoryPage(category:  snapshot.data['post']['category'].toString(),)));
+                                      },
+                                      child: Text(
+                                        snapshot.data['post']['category'].toString().toUpperCase(),
+                                        style: GoogleFonts.oswald(
 
-                                        textStyle: TextStyle(
-                                            height: 1.4,
-                                            letterSpacing: 2,
-                                            fontSize: 12,
-                                            wordSpacing: 3,
-                                            foreground: Paint() ..shader = TextUtils().linearGradient,
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                  ),]
+                                          textStyle: TextStyle(
+                                              height: 1.4,
+                                              letterSpacing: 2,
+                                              fontSize: 12,
+                                              wordSpacing: 3,
+                                              foreground: Paint() ..shader = TextUtils().linearGradient,
+                                              fontWeight: FontWeight.bold),
+                                        )
+                                  ),
+                                    ),]
                                 ),
                                 // TAGS
                                 Wrap(
@@ -448,15 +366,7 @@ class _PostDetailState extends State<PostDetail> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    // SizedBox(width: 10,),
-                                    // ListView.builder(
-                                    //
-                                    //   itemCount:snapshot.data['post']['tags'].toString().length ,
-                                    //   itemBuilder: (BuildContext context,index){
-                                    //     return Text(snapshot.data['post']['tags'][index].toString());
-                                    //
-                                    //   },
-                                    // ),
+
                                     for (var item in snapshot.data['post']
                                         ['tags'])
                                       InputChip(
@@ -538,9 +448,5 @@ class _PostDetailState extends State<PostDetail> {
     );
   }
 
-  Widget buildComments() => Container(
-        // height: MediaQuery.of(context).size.height*0.1,
-        height: 100,
-        child: Text("HELLo"),
-      );
+
 }

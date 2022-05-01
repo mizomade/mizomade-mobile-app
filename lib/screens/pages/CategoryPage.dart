@@ -1,57 +1,48 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
-import 'package:mizomade/Helpers/DatabaseHelper.dart';
-import 'package:mizomade/models/CategoryDBModel.dart';
+
 import 'package:mizomade/models/PostListModel.dart';
 import 'package:mizomade/screens/pages/PostDetail.dart';
-import 'package:mizomade/utils/API.dart';
 import 'package:mizomade/utils/CategoryListAPI.dart';
-import 'package:mizomade/utils/Network.dart';
-import 'package:mizomade/utils/PostListAPI.dart';
+
 import 'package:mizomade/widgets/PostCard.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-
-
-
-
 
 class CategoryPage extends StatefulWidget {
   // const CategoryPage({Key key}) : super(key: key);
   String category;
+
   CategoryPage({this.category});
 
   @override
   _CategoryPageState createState() => _CategoryPageState();
 }
 
-class _CategoryPageState extends State<CategoryPage> with SingleTickerProviderStateMixin {
+class _CategoryPageState extends State<CategoryPage>
+    with SingleTickerProviderStateMixin {
   Future postlist;
 
   ScrollController scrollViewController = ScrollController();
 
-
   static const _pageSize = 12;
 
   final PagingController<int, Results> _pagingController =
-  PagingController(firstPageKey: 1);
+      PagingController(firstPageKey: 1);
 
   @override
   void initState() {
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
-    // postlist = fetchInitial();
     super.initState();
-
-
   }
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems = await CategoryRemoteApi.getCharacterList(pageKey, _pageSize,searchTerm: widget.category.toString());
+      final newItems = await CategoryRemoteApi.getCharacterList(
+          pageKey, _pageSize,
+          searchTerm: widget.category.toString());
 
       final isLastPage = newItems.length < _pageSize;
       if (isLastPage) {
@@ -86,18 +77,16 @@ class _CategoryPageState extends State<CategoryPage> with SingleTickerProviderSt
               SliverAppBar(
                 floating: true,
                 snap: true,
-                title:  Row(
-                  children: [ const Text(
+                title: Row(children: [
+                  const Text(
                     'Category  ',
                     style: TextStyle(color: Colors.black87, letterSpacing: 2),
                   ),
-                    InputChip(label: Text(
-                        widget.category.toString()
-                    ),
-                      disabledColor: Colors.grey.shade200,
-                    )
-                  ]
-                ),
+                  InputChip(
+                    label: Text(widget.category.toString()),
+                    disabledColor: Colors.grey.shade200,
+                  )
+                ]),
                 automaticallyImplyLeading: true,
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.black87,
@@ -108,7 +97,7 @@ class _CategoryPageState extends State<CategoryPage> with SingleTickerProviderSt
           },
           body: RefreshIndicator(
             onRefresh: () => Future.sync(
-                  () => _pagingController.refresh(),
+              () => _pagingController.refresh(),
             ),
             child: SizedBox(
               height: MediaQuery.of(context).size.height,
@@ -119,16 +108,8 @@ class _CategoryPageState extends State<CategoryPage> with SingleTickerProviderSt
                   animateTransitions: true,
                   itemBuilder: (context, item, index) => GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(
-                          _createRoute(item.slug.toString(), item.id.toString()));
-
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => PostDetailTest(
-                      //               id: item.id.toString(),
-                      //               slug: item.slug.toString(),
-                      //             )));
+                      Navigator.of(context).push(_createRoute(
+                          item.slug.toString(), item.id.toString()));
                     },
                     child: (PostCard(
                       title: item.title.toString(),
@@ -138,7 +119,7 @@ class _CategoryPageState extends State<CategoryPage> with SingleTickerProviderSt
                       coverimage: item.coverimage.toString(),
                     )
                         // Text(item.title)
-                    ),
+                        ),
                   ),
                 ),
                 // separatorBuilder: (context, index) => const Divider(),
@@ -146,7 +127,6 @@ class _CategoryPageState extends State<CategoryPage> with SingleTickerProviderSt
             ),
           )),
       // Thi)
-
     );
   }
 

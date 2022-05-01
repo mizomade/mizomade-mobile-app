@@ -7,8 +7,10 @@ import 'CommentList.dart';
 class DeleteDialogue extends StatefulWidget {
   // const DeleteDialogue({Key key}) : super(key: key);
   String comment_id;
-String id;
-DeleteDialogue({this.comment_id,this.id});
+  String id;
+
+  DeleteDialogue({this.comment_id, this.id});
+
   @override
   _DeleteDialogueState createState() => _DeleteDialogueState();
 }
@@ -27,30 +29,28 @@ class _DeleteDialogueState extends State<DeleteDialogue> {
               elevation: 0,
             ),
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancel',style: TextStyle(color: Colors.black38),),
+            child: Text(
+              'Cancel',
+              style: TextStyle(color: Colors.black38),
+            ),
           ),
           TextButton(
             style: TextButton.styleFrom(
               primary: Colors.deepPurple.shade600,
               elevation: 0,
             ),
-            onPressed: () async{
-
+            onPressed: () async {
               bool result = await deleteComment(widget.comment_id.toString());
-              if(result == true){
+              if (result == true) {
                 CustomUtils.infoSnackBar(context, "Comment Deleted!");
                 Navigator.pop(context);
-                showModalBottomSheet(context: context,
+                showModalBottomSheet(
+                    context: context,
                     isScrollControlled: true,
-                    builder: (context) => CommentList(id: widget.id,));
-
+                    builder: (context) => CommentList(
+                          id: widget.id,
+                        ));
               }
-              // Navigator.pop(context);
-              // showModalBottomSheet(context: context,
-              //     isScrollControlled: true,
-              //     builder: (context) => CommentList());
-
-
             },
             child: Text('Yes'),
           ),

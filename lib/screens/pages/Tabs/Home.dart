@@ -1,36 +1,16 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:http/http.dart' as http;
 import 'package:mizomade/Helpers/DatabaseHelper.dart';
 import 'package:mizomade/models/CategoryDBModel.dart';
 import 'package:mizomade/models/PostListModel.dart';
 import 'package:mizomade/screens/pages/PostDetail.dart';
-import 'package:mizomade/utils/API.dart';
-import 'package:mizomade/utils/Network.dart';
+
 import 'package:mizomade/utils/PostListAPI.dart';
 import 'package:mizomade/widgets/PostCard.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../Action/CreatePost/CreatePost.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-
-import '../PostDetailTest.dart';
-
-// Future fetchInitial() async {
-//   print("INITTTT");
-//   var response = await http.get(Uri.parse(API_URL + 'posts/'));
-//   print("RESPONES" + json.decode(response.body).toString());
-//
-//   if (response.statusCode == 200) {
-//     print("True");
-//     print(response.body.toString());
-//     return jsonDecode(response.body);
-//   } else {
-//     print("Error");
-//   }
-// }
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class Home extends StatefulWidget {
   const Home({Key key}) : super(key: key);
@@ -40,12 +20,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  // Future postlist;
   DatabaseHelper dbHelper;
 
   ScrollController scrollViewController = ScrollController();
-
-  // Future<PostListModel> newItems;
 
   static const _pageSize = 12;
 
@@ -60,14 +37,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     // postlist = fetchInitial();
     super.initState();
 
-
     this.dbHelper = DatabaseHelper();
     dbHelper.insertCategoryList();
 
     this.dbHelper.initDB().whenComplete(() async {
       setState(() {
-        // CategoryDBModel category = new CategoryDBModel(name: "Eisiam",  color: "RED");
-        // dbHelper.insertCategory(category);
         Future<List<CategoryDBModel>> dbs = dbHelper.retrieveCategories();
         print("DBS" + dbs.asStream().toString());
       });
@@ -91,7 +65,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     List buildTextViews(int count) {
       List<Widget> strings = List();
@@ -109,17 +82,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
-
                 floating: true,
                 snap: true,
                 title: const Text(
                   'Mizomade',
-                  style: TextStyle( letterSpacing: 2),
+                  style: TextStyle(letterSpacing: 2),
                 ),
                 automaticallyImplyLeading: false,
                 backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
                 foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
-
                 toolbarHeight: kToolbarHeight,
                 elevation: 0.4,
               )
@@ -138,16 +109,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   animateTransitions: true,
                   itemBuilder: (context, item, index) => GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(
-                          _createRoute(item.slug.toString(), item.id.toString()));
-
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => PostDetailTest(
-                      //               id: item.id.toString(),
-                      //               slug: item.slug.toString(),
-                      //             )));
+                      Navigator.of(context).push(_createRoute(
+                          item.slug.toString(), item.id.toString()));
                     },
                     child: (PostCard(
                       title: item.title.toString(),
@@ -173,11 +136,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         },
         heroTag: 'create',
         icon: Icon(Icons.mode_edit_outline_outlined),
-        label: Text("Create",),
+        label: Text(
+          "Create",
+        ),
         elevation: 7,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        foregroundColor: Theme.of(context).floatingActionButtonTheme.foregroundColor,
-        backgroundColor: Theme.of(context).floatingActionButtonTheme.backgroundColor,
+        foregroundColor:
+            Theme.of(context).floatingActionButtonTheme.foregroundColor,
+        backgroundColor:
+            Theme.of(context).floatingActionButtonTheme.backgroundColor,
       ),
     );
   }
@@ -185,7 +152,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   void dispose() {
     _pagingController.dispose();
-
     super.dispose();
   }
 }

@@ -1,21 +1,12 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
-import 'package:mizomade/screens/pages/MainPage.dart';
 import 'package:mizomade/screens/pages/PostDetail.dart';
 import 'package:mizomade/utils/API.dart';
 import 'package:mizomade/utils/Network.dart';
-import 'package:mizomade/widgets/PostCard.dart';
-import 'package:mizomade/widgets/Sidebar.dart';
+
 
 class SearchResultPage extends StatefulWidget {
-  // const SavedPosts({Key key}) : super(key: key);
-  // String query;
-  //
-  // SearchResultPage({this.query});
-
   @override
   _SearchResultPageState createState() => _SearchResultPageState();
 }
@@ -24,12 +15,9 @@ class _SearchResultPageState extends State<SearchResultPage> {
   Future postlist;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController _search = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
 
   void initState() {
     super.initState();
-
-
   }
 
   @override
@@ -80,56 +68,9 @@ class _SearchResultPageState extends State<SearchResultPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Container(
-            //   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            //   width: MediaQuery.of(context).size.width * 0.9,
-            //   height: 40,
-            //   child: Form(
-            //     key: _formKey,
-            //     child: TextFormField(
-            //       controller: _search,
-            //       autofocus: false,
-            //       decoration: InputDecoration(
-            //         focusColor: Colors.white,
-            //         fillColor: Colors.grey.shade200,
-            //         filled: true,
-            //         border: OutlineInputBorder(
-            //           borderRadius: BorderRadius.circular(10),
-            //           borderSide: BorderSide.none,
-            //         ),
-            //         prefixIcon: Icon(Icons.search),
-            //         labelText: "Search ",
-            //       ),
-            //       onEditingComplete: () {
-            //         setState(() {
-            //           postlist = search(_search.text);
-            //         });
-            //       },
-            //     ),
-            //   ),
-            // ),
             SizedBox(
               height: 10,
             ),
-            // SizedBox(
-            //   width: MediaQuery.of(context).size.width * 0.96,
-            //   height: 30,
-            //   child: ListView(
-            //     scrollDirection: Axis.horizontal,
-            //     itemExtent: 80,
-            //     children: [
-            //       TagsChip(),
-            //       TagsChip(),
-            //       TagsChip(),
-            //       TagsChip(),
-            //       TagsChip(),
-            //     ],
-            //   ),
-            // ),
-            // SizedBox(
-            //   height: 20,
-            // ),
-            // Divider(),
             Suggestions(context),
           ],
         ),
@@ -150,7 +91,6 @@ class _SearchResultPageState extends State<SearchResultPage> {
                     return SugeestionCards(
                         context,
                         snapshot.data[0][index]['id'].toString(),
-
                         snapshot.data[0][index]['title'],
                         snapshot.data[0][index]['date'],
                         snapshot.data[0][index]['author'],
@@ -167,11 +107,17 @@ class _SearchResultPageState extends State<SearchResultPage> {
   }
 }
 
-Widget SugeestionCards(BuildContext context, String id, String title, String date,
-    String author, String coverphoto, String slug) {
+Widget SugeestionCards(BuildContext context, String id, String title,
+    String date, String author, String coverphoto, String slug) {
   return GestureDetector(
-    onTap: (){
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>PostDetail(id: id,slug: slug,)));
+    onTap: () {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => PostDetail(
+                    id: id,
+                    slug: slug,
+                  )));
     },
     child: Container(
       padding: EdgeInsets.all(10),
@@ -199,20 +145,19 @@ Widget SugeestionCards(BuildContext context, String id, String title, String dat
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Container(
-                //   width: 80,
-                //   decoration: BoxDecoration(
-                //     color: Colors.green[300],
-                //     borderRadius: BorderRadius.circular(10)
-                //   ),
-                //   child: Center(child: Text("EISIAM",style: TextStyle(color:Colors.white),)),),
                 Text(
                   title,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                Text("@"+author,style: GoogleFonts.abel(),),
+                Text(
+                  "@" + author,
+                  style: GoogleFonts.abel(),
+                ),
 
-                Text(dateFormat(date),style: GoogleFonts.abel(),),
+                Text(
+                  dateFormat(date),
+                  style: GoogleFonts.abel(),
+                ),
                 // InputChip(
                 //
                 //   label: Text("Gospel",),),
@@ -226,12 +171,8 @@ Widget SugeestionCards(BuildContext context, String id, String title, String dat
   );
 }
 
-
-
-
 Widget TagsChip() {
   return InputChip(
-    // avatar: Icon(Icons.remove),
     label: Text(
       'Eisiam',
       style: TextStyle(color: Colors.black54),

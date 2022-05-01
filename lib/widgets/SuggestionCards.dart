@@ -11,7 +11,10 @@ class SuggestionCards extends StatelessWidget {
   String date;
   String category;
   String coverimage;
-  SuggestionCards({this.title,this.user,this.date,this.category,this.coverimage});
+
+  SuggestionCards(
+      {this.title, this.user, this.date, this.category, this.coverimage});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,32 +25,38 @@ class SuggestionCards extends StatelessWidget {
         children: [
           ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: coverimage.toString() != "null" ? Image.network(coverimage,width: 110,
-                height: 80,
-                fit: BoxFit.cover,): SizedBox(
-                width: 110,height:80 ,
-              )),
+              child: coverimage.toString() != "null"
+                  ? Image.network(
+                      coverimage,
+                      width: 110,
+                      height: 80,
+                      fit: BoxFit.cover,
+                    )
+                  : SizedBox(
+                      width: 110,
+                      height: 80,
+                    )),
           Container(
             padding: EdgeInsets.only(left: 10),
-            width: MediaQuery.of(context).size.width*0.5,
+            width: MediaQuery.of(context).size.width * 0.5,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
-
-                // Container(
-                //   width: 80,
-                //   decoration: BoxDecoration(
-                //     color: Colors.green[300],
-                //     borderRadius: BorderRadius.circular(10)
-                //   ),
-                //   child: Center(child: Text("EISIAM",style: TextStyle(color:Colors.white),)),),
-                Text(title,style: GoogleFonts.abel( textStyle:TextStyle(fontSize: 16,fontWeight: FontWeight.bold,overflow: TextOverflow.ellipsis),),maxLines: 3,),
-                Text(dateFormat(date),style: GoogleFonts.abel(),),
-                // InputChip(
-                //
-                //   label: Text("Gospel",),),
+                Text(
+                  title,
+                  style: GoogleFonts.abel(
+                    textStyle: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis),
+                  ),
+                  maxLines: 3,
+                ),
+                Text(
+                  dateFormat(date),
+                  style: GoogleFonts.abel(),
+                ),
               ],
             ),
           ),
@@ -57,6 +66,3 @@ class SuggestionCards extends StatelessWidget {
     );
   }
 }
-
-
-

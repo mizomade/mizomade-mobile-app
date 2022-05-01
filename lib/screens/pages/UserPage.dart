@@ -66,7 +66,8 @@ class _UserPageState extends State<UserPage> {
                   controller: _scrollController,
                   slivers: [
                     SliverAppBar(
-                      backgroundColor: Colors.white,
+                      backgroundColor:
+                          Theme.of(context).appBarTheme.backgroundColor,
 
                       pinned: _pinned,
                       snap: _snap,
@@ -74,18 +75,9 @@ class _UserPageState extends State<UserPage> {
                       expandedHeight: 200,
                       centerTitle: false,
                       // leadingWidth: 0,
-
-                      leading: IconButton(
-                        icon: Icon(
-                          Icons.arrow_back_outlined,
-                          color: isShrink ? Colors.black : Colors.white,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            Navigator.pop(context);
-                          });
-                        },
-                      ),
+                      foregroundColor:
+                          Theme.of(context).appBarTheme.foregroundColor,
+                      automaticallyImplyLeading: true,
                       flexibleSpace: FlexibleSpaceBar(
                         title: Text(
                           '@' + snapshot.data[0]['username'],
@@ -95,9 +87,7 @@ class _UserPageState extends State<UserPage> {
                               fontSize: 16),
                         ),
                         background: Image.network(
-                           snapshot.data[1]['coverphoto'],
-                          // width: 45,
-                          // height: 45,
+                          snapshot.data[1]['coverphoto'],
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -176,38 +166,22 @@ class _UserPageState extends State<UserPage> {
                           label: Text("Posts"),
                         ),
                       ),
-
                       ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-
                           itemCount: snapshot.data[2].length,
                           itemBuilder: (context, index) {
                             return SugeestionCards(
                                 snapshot.data[2][index]['id'].toString(),
-
                                 snapshot.data[2][index]['title'].toString(),
                                 snapshot.data[2][index]['date'].toString(),
-                                snapshot.data[2][index]['coverimage'].toString(),
+                                snapshot.data[2][index]['coverimage']
+                                    .toString(),
                                 snapshot.data[2][index]['slug'].toString());
                           }),
                       Divider(),
                       Container(color: Colors.black54, height: 50.0),
-                    ])
-
-                        // delegate: SliverChildBuilderDelegate(
-                        //       (BuildContext context, int index) {
-                        //     return Container(
-                        //       color: index.isOdd ? Colors.white : Colors.black12,
-                        //       height: 100.0,
-                        //       child: Center(
-                        //         child: Text('$index', textScaleFactor: 5),
-                        //       ),
-                        //     );
-                        //   },
-                        //   childCount: 20,
-                        // ),
-                        ),
+                    ])),
                   ],
                 );
               } else if (snapshot.hasError) {
@@ -219,10 +193,17 @@ class _UserPageState extends State<UserPage> {
             }));
   }
 
-  Widget SugeestionCards(String id,String title,String date,String coverimage,String slug) {
+  Widget SugeestionCards(
+      String id, String title, String date, String coverimage, String slug) {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>PostDetail(id: id,slug: slug,)));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PostDetail(
+                      id: id,
+                      slug: slug,
+                    )));
       },
       child: Container(
         padding: EdgeInsets.all(10),
@@ -232,15 +213,17 @@ class _UserPageState extends State<UserPage> {
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: coverimage != 'null' ? Image.network(
-                  coverimage,
-                  width: 110,
-                  height: 80,
-                  fit: BoxFit.fill,
-                ):SizedBox(
-                  width: 110,
-                    height: 80,
-                )),
+                child: coverimage != 'null'
+                    ? Image.network(
+                        coverimage,
+                        width: 110,
+                        height: 80,
+                        fit: BoxFit.fill,
+                      )
+                    : SizedBox(
+                        width: 110,
+                        height: 80,
+                      )),
             Container(
               padding: EdgeInsets.only(left: 10),
               width: MediaQuery.of(context).size.width * 0.5,
@@ -248,13 +231,6 @@ class _UserPageState extends State<UserPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Container(
-                  //   width: 80,
-                  //   decoration: BoxDecoration(
-                  //     color: Colors.green[300],
-                  //     borderRadius: BorderRadius.circular(10)
-                  //   ),
-                  //   child: Center(child: Text("EISIAM",style: TextStyle(color:Colors.white),)),),
                   Text(
                     title,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -266,7 +242,7 @@ class _UserPageState extends State<UserPage> {
                 ],
               ),
             ),
-            IconButton(icon: Icon(Icons.bookmark), onPressed: () {})
+            // IconButton(icon: Icon(Icons.bookmark), onPressed: () {})
           ],
         ),
       ),

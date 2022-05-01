@@ -230,6 +230,21 @@ Future updateProfile(
     return "";
 }
 
+
+Future fetchdetail(String slug) async {
+  var response = await http.get(Uri.parse(API_URL + 'posts/' + slug));
+  print("RESPONES" + json.decode(response.body).toString());
+
+  if (response.statusCode == 200) {
+
+    print("True");
+    // tags = jsonDecode(response.body)['post']['tags'];
+    return jsonDecode(response.body);
+  } else {
+    print("Error");
+  }
+}
+
 Future<String> like(String id) async {
   Map<String, String> headers = {
     "content-type": "application/json",
