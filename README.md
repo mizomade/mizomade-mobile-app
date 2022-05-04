@@ -9,6 +9,7 @@ TODO :
 1.Fix Margin for Signup and Registration
 2.Fix Details Page
 3.Onload error in Profile Fetch
+4.Integrate admobs
 
 
 
