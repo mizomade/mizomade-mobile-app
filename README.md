@@ -1,16 +1,23 @@
 # mizomade
 
-A new Flutter project.
+Khawvel thiamna Mizo te tan, Pathian hmangaihna khawvel tan.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+TODO : 
+1.Fix Margin for Signup and Registration
+1b . CreateMeta fetch categories.
+2b. CreateMeta upload image section.
+3b.Using Future for fetch
+2.Fix Details Page
+3.Onload error in Profile Fetch
+4.Integrate admobs
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+FUTURE Wors:
+1.Change Navigation routes with ongenerate
+2.Optimize Provider
+3.Different Screen size
