@@ -144,6 +144,7 @@ class _CreatePostState extends State<CreatePost> {
   // You can also upload the picked image to any server (eg : AWS s3
   // or Firebase) and then return the uploaded image URL.
   Future<String> _onImagePickCallback(File file) async {
+
     // Copies the picked file from temporary cache to applications directory
     final fileUrl = await imageUpload(file.path);
     // final appDocDir = await getApplicationDocumentsDirectory();
@@ -152,5 +153,13 @@ class _CreatePostState extends State<CreatePost> {
     // return copiedFile.path.toString();
     print("FILEURL" + fileUrl.toString());
     return fileUrl.toString();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    texts.dispose();
+
+    super.dispose();
   }
 }

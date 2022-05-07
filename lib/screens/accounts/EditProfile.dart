@@ -260,4 +260,12 @@ class _EditProfileState extends State<EditProfile> {
       setState(() {});
     }
   }
+
+  @override
+  void dsipose() {
+    profilePhoto.delete();
+    coverPhoto.delete();
+    super.initState();
+  }
+
 }

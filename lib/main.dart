@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:mizomade/utils/States.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -112,7 +113,8 @@ void initState(){
 }
 @override
   Widget build(BuildContext context) {
-
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: Theme.of(context).primaryColor));
   return Consumer<Profile>(
     builder: (context,provider,child){
       return WillPopScope(

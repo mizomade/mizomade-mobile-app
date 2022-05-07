@@ -125,9 +125,14 @@ class _LoginPageState extends State<LoginPage> {
                     height: 60,
                     child: FloatingActionButton.extended(
                       onPressed: () async {
-                        setState(() {
-                          loading = true;
-                        });
+
+                        Future.delayed(const Duration(milliseconds: 500), () {
+                          setState(() {
+
+                            loading = true;
+                          }); });
+
+                      try {
                         Timer(Duration(seconds: 1), () async {
                           var result = await attemptLogin(
                               _username.text, _password.text);
@@ -144,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => MainPage()));
-                          } else {
+                          } else if(result == false) {
                             setState(() {
                               loading = false;
                             });
@@ -152,6 +157,20 @@ class _LoginPageState extends State<LoginPage> {
                                 context, "Incorrect Credentials");
                           }
                         });
+                      }
+
+                      finally  {
+                        Future.delayed(const Duration(milliseconds: 15000), () {
+                          setState(() {
+
+                            loading = false;
+                          });
+                          CustomUtils.infoSnackBar(
+                              context, " Connection timeout!");
+                        });
+
+                      }
+
                       },
                       label: Flex(direction: Axis.horizontal, children: [
                         loading == true

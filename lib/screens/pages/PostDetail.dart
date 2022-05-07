@@ -86,7 +86,7 @@ class _PostDetailState extends State<PostDetail> {
   @override
   void initState() {
     super.initState();
-    postDetail = fetchdetail(widget.slug);
+    postDetail = fetchPostDetail(widget.slug);
     checkInitialStatus();
     print(widget.id);
     // myBanner.load();

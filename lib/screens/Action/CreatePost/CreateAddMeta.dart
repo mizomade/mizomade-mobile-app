@@ -24,127 +24,153 @@ class CreateAddMetaState extends State<CreateAddMeta> {
   String categoryDropdownValue = 'Eisiam';
 
   File coverPhoto;
+  Future draftDetail;
+
+  @override
+  void initState(){
+    super.initState();
+    draftDetail = fetchDraftDetail(widget.id);
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Colors.black38,
-        backgroundColor: Colors.white,
+        foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         title: Text("Finalize Post"),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-              child: TextFormField(
-                controller: _title,
-                decoration: InputDecoration(
-                  focusColor: Colors.white,
-                  fillColor: Colors.grey.shade200,
-                  label: Text("Title"),
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
-              child: Text("Category:"),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.grey.shade200),
-              child: DropdownButton<String>(
-                value: categoryDropdownValue,
-                hint: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Text("Select Category")),
-                icon: const Icon(Icons.arrow_drop_down),
-                elevation: 16,
-                style: const TextStyle(color: Colors.black),
-                underline: Container(
-                  height: 0,
-                  color: Colors.deepPurpleAccent,
-                ),
-                onChanged: (String newValue) {
-                  setState(() {
-                    categoryDropdownValue = newValue;
-                  });
-                },
-                items: <String>['Eisiam', 'Infiamna', 'Gospel', 'Zirna']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Container(
-                        margin: EdgeInsets.only(left: 20),
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(value)),
-                  );
-                }).toList(),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-              child: TextFormField(
-                controller: _tags,
-                decoration: InputDecoration(
-                  focusColor: Colors.white,
-                  fillColor: Colors.grey.shade200,
-                  // labelText: "Title",
-                  label: Text("Tags (separated by commas ) "),
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(bottom: 4),
-              child: coverPhoto == null
-                  ? Text("No cover photo selected yet!")
-                  : Image.file(
-                      coverPhoto,
-                      fit: BoxFit.fill,
-                      width: MediaQuery.of(context).size.width,
+        // child: FutureBuilder(
+        //   future: draftDetail,
+        //   builder: (context,snapshot){
+        //     if( snapshot.hasData){
+        //
+        //     }
+        //     else if(snapshot.hasError){
+        //       return Center(child: Text("Network Error"),);
+        //     }
+        //     else{
+        //       return Center(child: CircularProgressIndicator());
+        //     }
+        //   })
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                child: TextFormField(
+                  controller: _title,
+                  decoration: InputDecoration(
+                    focusColor: Colors.white,
+                    fillColor: Colors.grey.shade200,
+                    label: Text("Title"),
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: BorderSide.none,
                     ),
-            ),
-            TextButton(
-                onPressed: () {
-                  _getCoverFromGallery();
-                },
-                child: Text("Update Cover Photo")),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: FloatingActionButton(
-                onPressed: () {
-                  // print("ID" +widget.id+  _title.text + categorydropdownValue.toString() + coverPhoto.path + _tags.text);
-                  publishPost(
-                      widget.id.toString(),
-                      _title.text,
-                      categoryDropdownValue.toString(),
-                      coverPhoto.path,
-                      _tags.text);
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => MainPage()),
-                      (route) => false);
-                },
-                child: Text("Post"),
+                  ),
+                ),
               ),
-            )
-          ],
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+                child: Text("Category:"),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.grey.shade200),
+                child: DropdownButton<String>(
+                  value: categoryDropdownValue,
+                  hint: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Text("Select Category")),
+                  icon: const Icon(Icons.arrow_drop_down),
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.black),
+                  underline: Container(
+                    height: 0,
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  onChanged: (String newValue) {
+                    setState(() {
+                      categoryDropdownValue = newValue;
+                    });
+                  },
+                  items: <String>['Eisiam', 'Infiamna', 'Gospel', 'Zirna']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Container(
+                          margin: EdgeInsets.only(left: 20),
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Text(value)),
+                    );
+                  }).toList(),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                child: TextFormField(
+                  controller: _tags,
+                  decoration: InputDecoration(
+                    focusColor: Colors.white,
+                    fillColor: Colors.grey.shade200,
+                    // labelText: "Title",
+                    label: Text("Tags (separated by commas ) "),
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(bottom: 4),
+                child: coverPhoto == null
+                    ? Text("No cover photo selected yet!")
+                    : Image.file(
+                        coverPhoto,
+                        fit: BoxFit.fill,
+                        width: MediaQuery.of(context).size.width,
+                      ),
+              ),
+              TextButton(
+                  onPressed: () {
+                    _getCoverFromGallery();
+                  },
+                  child: Text("Update Cover Photo")),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: FloatingActionButton(
+                  isExtended: true,
+
+                  onPressed: () {
+                    // print("ID" +widget.id+  _title.text + categorydropdownValue.toString() + coverPhoto.path + _tags.text);
+                    publishPost(
+                        widget.id.toString(),
+                        _title.text,
+                        categoryDropdownValue.toString(),
+                        coverPhoto.path,
+                        _tags.text);
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => MainPage()),
+                        (route) => false);
+                  },
+                  child: Text("Post"),
+                ),
+              )
+            ],
+          ),
         ),
-      ),
+
     );
   }
 

@@ -19,35 +19,35 @@ class MyProfilePage extends StatefulWidget {
 }
 
 class _MyProfilePageState extends State<MyProfilePage> {
-  Future postlist;
-  String username = "";
-  String fullname = "";
-  String bio = "";
-  String coverphoto = "";
-  String profilephoto = "";
+  Future postList;
+  // String username = "";
+  // String fullname = "";
+  // String bio = "";
+  // String coverphoto = "";
+  // String profilephoto = "";
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  void startingServices() async {
-    getMyProfile();
-    var prefs = await SharedPreferences.getInstance();
-    setState(() {
-      username = prefs.getString('username').toString();
-      fullname =
-          prefs.getString('first_name') + " " + prefs.getString('last_name');
-      bio = prefs.getString('bio');
-      coverphoto = prefs.getString('coverphoto');
-      profilephoto = prefs.getString('profilephoto');
-    });
-  }
+  // void startingServices() async {
+  //   getMyProfile();
+  //   var prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     username = prefs.getString('username').toString();
+  //     fullname =
+  //         prefs.getString('first_name') + " " + prefs.getString('last_name');
+  //     bio = prefs.getString('bio');
+  //     coverphoto = prefs.getString('coverphoto');
+  //     profilephoto = prefs.getString('profilephoto');
+  //   });
+  // }
 
   @override
   void initState() {
     super.initState();
     setState(() {
-      postlist = getMyProfile();
+      postList = getMyProfile();
     });
-    startingServices();
+    // startingServices();
   }
 
   @override
@@ -102,7 +102,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
     return RefreshIndicator(
       onRefresh: () => Future.sync(() {
         setState(() {
-          postlist = getMyProfile();
+          postList = getMyProfile();
         });
       }),
       child: SingleChildScrollView(
@@ -123,7 +123,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
 
   Widget profileDetailsBlock(BuildContext context) {
     return FutureBuilder(
-        future: postlist,
+        future: postList,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Column(
@@ -315,7 +315,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
         ),
       ),
       FutureBuilder(
-        future: postlist,
+        future: postList,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
@@ -373,7 +373,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
         ),
       ),
       FutureBuilder(
-        future: postlist,
+        future: postList,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(

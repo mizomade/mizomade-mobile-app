@@ -46,8 +46,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Theme.of(context).primaryColor));
+
     return Consumer<Profile>(builder: (context, provider, child) {
       return provider.isAuthenticated == true
           ? Scaffold(

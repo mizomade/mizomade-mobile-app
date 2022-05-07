@@ -104,14 +104,15 @@ Future getMyProfile() async {
     storage.write(key: 'user_id', value: id);
 
     // if(prefs.getString('username') == null) {
+    
     prefs.setString('username', vals[0]['username'].toString());
     prefs.setString('first_name', vals[0]['first_name'].toString());
     prefs.setString('last_name', vals[0]['last_name'].toString());
     prefs.setString('bio', vals[1]['bio'].toString());
     prefs.setString('coverphoto', vals[1]['coverphoto'].toString());
     prefs.setString('profilephoto', vals[1]['profilephoto'].toString());
-    print("USERNAME:" + prefs.getString('username').toString());
-    print(prefs.getString('coverphoto'));
+    // print("USERNAME:" + prefs.getString('username').toString());
+    // print(prefs.getString('coverphoto'));
     // }
     // else
     //   print("Already exist");
@@ -229,7 +230,7 @@ Future updateProfile(
 }
 
 
-Future fetchdetail(String slug) async {
+Future fetchPostDetail(String slug) async {
   var response = await http.get(Uri.parse(API_URL + 'posts/' + slug));
   print("RESPONES" + json.decode(response.body).toString());
 
@@ -487,6 +488,22 @@ Future createPost(String content ) async {
     return jsonDecode(res.body)['id'];
   }
 }
+
+Future fetchDraftDetail(String id) async {
+  var response = await http.get(Uri.parse(API_URL + 'drafts/' + id));
+  print("RESPONES" + json.decode(response.body).toString());
+
+  if (response.statusCode == 200) {
+
+    print("True");
+    // tags = jsonDecode(response.body)['post']['tags'];
+    return jsonDecode(response.body);
+  } else {
+    print("Error");
+  }
+}
+
+
 
 Future publishPost(String ids,String title,String category,String coverimage,String tags ) async {
   print("PUBLISH" + ids.toString() +title.toString() + category.toString() + coverimage.toString() + tags.toString());

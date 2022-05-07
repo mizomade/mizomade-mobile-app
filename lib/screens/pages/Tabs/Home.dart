@@ -36,15 +36,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     // postlist = fetchInitial();
     super.initState();
 
-    this.dbHelper = DatabaseHelper();
-    dbHelper.insertCategoryList();
+    // this.dbHelper = DatabaseHelper();
+    // dbHelper.insertCategoryList();
 
-    this.dbHelper.initDB().whenComplete(() async {
-      setState(() {
-        Future<List<CategoryDBModel>> dbs = dbHelper.retrieveCategories();
-        print("DBS" + dbs.asStream().toString());
-      });
-    });
+    // this.dbHelper.initDB().whenComplete(() async {
+    //   setState(() {
+    //     Future<List<CategoryDBModel>> dbs = dbHelper.retrieveCategories();
+    //     print("DBS" + dbs.asStream().toString());
+    //   });
+    // });
   }
 
   Future<void> _fetchPage(int pageKey) async {

@@ -78,6 +78,10 @@ class MyThemes{
       foregroundColor: Colors.white,
       backgroundColor: Colors.deepPurple,
 
+    ),
+    textTheme: const TextTheme(
+      headline1: TextStyle(fontSize: 26,fontWeight: FontWeight.bold),
+
     )
 
 

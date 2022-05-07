@@ -50,12 +50,13 @@ class _PostCardState extends State<PostCard> {
                       radius: 26,
                       child: ClipOval(
 // 45 before
-                          child: Image.network(
+                          child: widget.coverimage.toString() != "null" ?
+                        Image.network(
                         S3_Host + widget.authorimage,
                         width: 40,
                         height: 40,
                         fit: BoxFit.cover,
-                      )),
+                      ) : Container()),
                       backgroundColor: Colors.transparent,
                     ),
                     SizedBox(

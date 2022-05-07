@@ -15,16 +15,16 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  DatabaseHelper dbHelper;
-  Future<List<CategoryDBModel>> dbs;
+  // DatabaseHelper dbHelper;
+  // Future<List<CategoryDBModel>> dbs;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    this.dbHelper = DatabaseHelper();
-    dbs = dbHelper.retrieveCategories();
+    // this.dbHelper = DatabaseHelper();
+    // dbs = dbHelper.retrieveCategories();
   }
 
   @override
