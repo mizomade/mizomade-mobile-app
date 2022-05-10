@@ -32,9 +32,10 @@ class _OTPRegisterState extends State<OTPRegister> {
         foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
         elevation: 0,
       ),
-      body: Container(
+      body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.all(10),
+          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+
           child: Column(
             children: [
               Text(

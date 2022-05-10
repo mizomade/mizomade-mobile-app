@@ -20,7 +20,7 @@ class _NewPasswordForgotState extends State<NewPasswordForgot> {
       body: Container(
         child: SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.all(10),
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Column(
               children: [
                 Text(

@@ -29,7 +29,7 @@ class _OTPPasswordState extends State<OTPPassword> {
       ),
       body: Container(
         child: Container(
-          margin: EdgeInsets.all(10),
+          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Column(
             children: [
               Text(

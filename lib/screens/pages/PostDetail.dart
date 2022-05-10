@@ -57,6 +57,7 @@ class _PostDetailState extends State<PostDetail> {
 
   Future postDetail;
   var jsonContent;
+  var title;
 
   // final AdSize adSize = AdSize(width: 300,height: 50);
   // final BannerAdListener listener = BannerAdListener(
@@ -87,8 +88,9 @@ class _PostDetailState extends State<PostDetail> {
   void initState() {
     super.initState();
     postDetail = fetchPostDetail(widget.slug);
+
     checkInitialStatus();
-    print(widget.id);
+    // print(widget.id);
     // myBanner.load();
     // final AdWidget adWidget = AdWidget(ad: myBanner);
     // final Container adContainer = Container(
@@ -152,15 +154,16 @@ class _PostDetailState extends State<PostDetail> {
                               children: [
 
                                 Text(
-                                  snapshot.data['post']['title'].toString(),
-                                  style: GoogleFonts.playfairDisplay(
+                                  convertingTitles(snapshot.data['post']['title'].toString().codeUnits),
+                                  style: GoogleFonts.robotoSlab(
 
                                     textStyle: TextStyle(
                                       height: 1.2,
                                       letterSpacing: 1,
                                       fontSize: 22,
                                       wordSpacing:1 ,
-                                      fontWeight: FontWeight.w800),
+                                      fontWeight: FontWeight.w800
+                                    ),
                                   )
                                 ),
                                 SizedBox(

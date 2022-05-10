@@ -19,9 +19,9 @@ Future<bool> register1(String username, String password,String phone) async {
     storage.write(key: 'username', value: vals['username'].toString());
     storage.write(key: 'session', value: vals['status'].toString());
 
-    String uname = await storage.read(key: 'username');
-    String sess =  await storage.read(key: 'session');
-    print(uname.toString() + sess.toString());
+    // String uname = await storage.read(key: 'username');
+    // String sess =  await storage.read(key: 'session');
+    // print(uname.toString() + sess.toString());
 
     // return vals['key'].toString();
     return Future<bool>.value(true);
@@ -649,4 +649,54 @@ Future imageUpload(String filename) async {
 
 
   }
+}
+
+
+
+Future<bool> phonePasswordForget(String phone) async {
+  print("STARTING Registration 1 ATTEMPT");
+  var response = await http.post(Uri.parse(HOST_URL + '/api/user/phonepasswordreset/'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'phone':phone,}));
+  if (response.statusCode == 200) {
+    var vals = jsonDecode(response.body);
+
+    print("VALS" + vals.toString());
+    storage.write(key: 'phone_username', value: vals['username'].toString());
+    storage.write(key: 'phone_session', value: vals['status'].toString());
+
+    // String uname = await storage.read(key: 'username');
+    // String sess =  await storage.read(key: 'session');
+    // print(uname.toString() + sess.toString());
+
+    // return vals['key'].toString();
+    return Future<bool>.value(true);
+  } else
+  {
+    return Future<bool>.value(false);
+
+  }
+
+}
+
+Future<bool> otpPhonePasswordForgetVerification(String otp) async {
+
+  String username = await storage.read(key: 'phone_username');
+  String session =  await storage.read(key: 'phone_session');
+  print("STARTING OTP VERIFICATION ATTEMPT");
+  var response = await http.post(Uri.parse(HOST_URL + '/api/user/otpphonepasswordverification/'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'username': username, 'otp': otp,'session':session}));
+  if (response.statusCode == 200) {
+    // var vals = jsonDecode(response.body);
+
+
+    // return vals['key'].toString();
+    return Future<bool>.value(true);
+  } else
+  {
+    return Future<bool>.value(false);
+
+  }
+
 }

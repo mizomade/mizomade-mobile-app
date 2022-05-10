@@ -1,7 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mizomade/utils/API.dart';
+import 'package:mizomade/utils/Texts.dart';
 
 class PostCard extends StatefulWidget {
   // const PostCard({Key key}) : super(key: key);
@@ -19,6 +21,16 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
+var titles ;
+
+
+@override
+void initState()
+{
+  super.initState();
+  // final codeunits = ;
+  titles =  convertingTitles(widget.title.codeUnits);
+}
 
 
   @override
@@ -65,23 +77,26 @@ class _PostCardState extends State<PostCard> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          child: Text(
-                            widget.title,
-                            maxLines: 3,
-                            softWrap: true,
-                            style: GoogleFonts.playfairDisplay(
-                              decoration: TextDecoration.none,
-                              textStyle: TextStyle(
-                                  wordSpacing: 1,
-                                  letterSpacing: 1,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16,
-                                  overflow: TextOverflow.ellipsis),
-                            ),
-                          ),
-                          width: 280,
-                        ),
+                        // Container(
+                        //   child: Text(
+                        //     titles.toString(),
+                        //     maxLines: 3,
+                        //     softWrap: true,
+                        //     style: GoogleFonts.playfairDisplay(
+                        //       decoration: TextDecoration.none,
+                        //       textStyle: TextStyle(
+                        //           wordSpacing: 1,
+                        //           letterSpacing: 1,
+                        //           fontWeight: FontWeight.w600,
+                        //           fontSize: 16,
+                        //           overflow: TextOverflow.ellipsis),
+                        //     ),
+                        //   ),
+                        //   width: 280,
+                        // ),
+                        buildTitle(),
+                        // RichText(text: TextSpan(text:''' widget.title ''')),
+                        // Text(titles.toString()),
                         SizedBox(
                           height: 8,
                         ),
@@ -120,4 +135,25 @@ class _PostCardState extends State<PostCard> {
       ),
     );
   }
+
+  Widget buildTitle() => Container(
+    padding: EdgeInsets.only(top: 4),
+    width: 280,
+    child: Text.rich(TextSpan(
+      text: titles,
+
+            style: GoogleFonts.robotoCondensed(
+              decoration: TextDecoration.none,
+              textStyle: TextStyle(
+                  wordSpacing: 1,
+                  letterSpacing: 1,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  overflow: TextOverflow.ellipsis),
+            ),
+      children: [
+        // TextSpan(text:  "test😃" )
+      ]
+    )),
+  );
 }
